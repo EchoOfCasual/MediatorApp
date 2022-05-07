@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "6a4ed0dc-3b13-4da3-899b-ffa1abb2cddf",
+		"name": "Algorithm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[GET]AlgorihmOutput",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"supplierTable\": [\r\n        {\r\n            \"sellPrice\":10,\r\n            \"availableQuantity\":5\r\n        },\r\n        {\r\n            \"sellPrice\":30,\r\n            \"availableQuantity\":15\r\n        }\r\n        ],\r\n    \"recipientTable\": [\r\n        {\r\n            \"buyPrice\":10,\r\n            \"desiredQuantity\": 5\r\n        },\r\n        {\r\n            \"buyPrice\":30,\r\n            \"desiredQuantity\": 15\r\n        },\r\n        {\r\n            \"buyPrice\":80,\r\n            \"desiredQuantity\": 40\r\n        }\r\n    ],\r\n    \"transportaionCostsTable\": [[1,2,3],[4,5,6]]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8282/api/v1/algorithm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8282",
+					"path": [
+						"api",
+						"v1",
+						"algorithm"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
