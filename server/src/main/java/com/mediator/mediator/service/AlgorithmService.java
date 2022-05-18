@@ -1,5 +1,6 @@
 package com.mediator.mediator.service;
 
+import com.mediator.algo.Mediator;
 import com.mediator.mediator.model.AlgorithmInput;
 import com.mediator.mediator.model.AlgorithmOutput;
 import org.springframework.stereotype.Service;
@@ -9,19 +10,23 @@ public class AlgorithmService {
 
     public AlgorithmOutput doAlgorithm(AlgorithmInput algorithmInput){
 
-        //Here the algorithm should be used
-
-        //================================= testing random values =================================
-        Float purchaseCosts = 10000.0f;
-        Float transportationCosts = 21.37f;
-        Float profit = 910000.0f;
-        Float income = 4200000.0f;
-
-        Integer[][] optimalSellPathsTable = {{1,2,3},{4,5,6}};
-
-        AlgorithmOutput algorithmOutput = new AlgorithmOutput(purchaseCosts, transportationCosts, profit, income, optimalSellPathsTable);
-        //================================= end of testing =================================
-
+        int[] supply = new int[algorithmInput.getSupplierTable().length];
+        int[] demand = new int[algorithmInput.getRecipientTable().length];
+        for(int i = 0; i < supply.length; i++) {
+            supply[i] = algorithmInput.getSupplierTable()[i].getAvailableQuantity();
+        }
+        for(int i = 0; i < demand.length; i++) {
+            demand[i] = algorithmInput.getRecipientTable()[i].getDesiredQuantity();
+        }
+        int[][] profitTable = new int[supply.length][demand.length];
+        for(int i = 0; i < supply.length; i++) {
+            for(int j = 0; j < demand.length; j++) {
+                profitTable[i][j] = (int)(algorithmInput.getRecipientTable()[j].getBuyPrice() - algorithmInput.getSupplierTable()[i].getSellPrice() - algorithmInput.getTransportaionCostsTable()[j][i]);
+            }
+        }
+        Mediator mediator = new Mediator(profitTable, supply, demand);
+        mediator.calculate();
+        AlgorithmOutput algorithmOutput = new AlgorithmOutput(Float.valueOf(mediator.getProfit()), mediator.getDistribution());
 
         return algorithmOutput;
     }
