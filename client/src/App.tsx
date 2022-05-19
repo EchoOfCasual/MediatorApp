@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {FunctionComponent, useEffect, useState, useRef} from 'react';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import { InputList } from './components/InputList/InputList';
+import {Route, Routes, useNavigate} from "react-router-dom";
+import { SuppRecInputPage } from './components/SuppRecInputPage/SuppRecInputPage';
+import {TransportTableInputPage, tableTile} from './components/TransportTableInputPage/TransportTableInputPage';
+
+
 
 function App() {
+
+  const [columnTableList, setColumnTableList] = useState<tableTile[]> ([]);
+  const [rpwTableList, setRowTableList] = useState<tableTile[]> ([]);
+
+
+  
+
   return (
     <div className="App">
       {/*<header className="App-header">
@@ -52,8 +64,15 @@ function App() {
           </a>
         </span>
        </header>*/}
-      <InputList argumentList={["Nazwa", "Ilosc sztuk na sprzedaz", "Cena"]} title="Dostawcy"/>
-      <InputList argumentList={["Nazwa", "Ilosc sztuk na sprzedaz", "Cena"]} title="Odbiorcy"/>
+
+      <Routes>
+       <Route path="/" element={<SuppRecInputPage/>}/>
+       <Route path="/transport_table_page" element={<TransportTableInputPage rowList={[]} columnList={[]}/>}/>
+       {/*Slot na routa pośredniego <Route path="" element={}/>*/ }
+       {/*<Route path="" element={}/>*/}
+       <Route path="*" element={<div> No such endpoint </div>} />
+      </Routes>
+
     </div>
   );
 }

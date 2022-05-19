@@ -21,7 +21,7 @@ public class AlgorithmService {
         int[][] profitTable = new int[supply.length][demand.length];
         for(int i = 0; i < supply.length; i++) {
             for(int j = 0; j < demand.length; j++) {
-                profitTable[i][j] = (int)(algorithmInput.getRecipientTable()[j].getBuyPrice() - algorithmInput.getSupplierTable()[i].getSellPrice() - algorithmInput.getTransportaionCostsTable()[j][i]);
+                profitTable[i][j] = (int)(algorithmInput.getRecipientTable()[j].getBuyPrice() - algorithmInput.getSupplierTable()[i].getSellPrice() - algorithmInput.getTransportaionCostsTable()[i][j]);
             }
         }
         Mediator mediator = new Mediator(profitTable, supply, demand);
