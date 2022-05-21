@@ -1,0 +1,43 @@
+.table-input-page-wrapper{
+
+}
+
+
+.tile-in-transport-table{
+    width: 150px;
+    padding: 5px;
+    border: 1px solid black;
+
+}
+
+.input-in-tile-in-transport-table{
+    width: 110px;
+
+}
+
+.row-box-in-table{
+    display: flex;
+
+}
+
+.table-box{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    align-items: center;
+
+
+}
+
+.ok-button-wrapper{
+
+}
+
+.ok-button{
+
+}
+
+.ok-button-error-message{
+    
+}

@@ -1,0 +1,28 @@
+.table-input-wrapper{
+
+}
+
+
+.tile-in-table{
+    width: 180px;
+    padding: 5px;
+    border: 1px solid black;
+
+}
+
+
+
+.row-box-in-table{
+    display: flex;
+
+}
+
+.table-box{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    align-items: center;
+
+
+}

@@ -1,0 +1,43 @@
+.even-input-in-input-list-entry{
+    background-color: rgb(200,200,200);
+
+}
+
+.odd-input-in-input-list-entry{
+    background-color: rgb(230,230,230);
+}
+
+.input-in-input-list-entry{
+    padding: 5px 10px;
+    font-size: 25px;
+
+    max-width: 300px;
+    width: 300px;
+    min-width: 60px;
+
+
+}
+
+.input-tile-in-input-list{
+    width: 700px;
+    display: flex;
+}
+
+.input-tile-in-input-list-wrapper{
+    display: flex;
+    margin-top: 1px;
+}
+
+.input-tile-delete-button{
+    
+    background-color: inherit;
+    border: 1px solid rgb(255, 210, 210);
+    transition: 0.3s;
+    cursor: pointer;
+    margin-left: 1px;
+}
+
+.input-tile-delete-button:hover{
+    background-color: rgb(255, 210, 210);
+    cursor: pointer;
+}
