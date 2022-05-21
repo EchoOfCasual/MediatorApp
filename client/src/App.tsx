@@ -11,11 +11,8 @@ import {TransportTableInputPage, tableTile} from './components/TransportTableInp
 
 function App() {
 
-  const [columnTableList, setColumnTableList] = useState<tableTile[]> ([]);
-  const [rpwTableList, setRowTableList] = useState<tableTile[]> ([]);
-
-  
-  
+  const sup: string = "Suppliers";
+  const rec: string = "Recipients";
 
   return (
     <div className="App">
@@ -66,9 +63,9 @@ function App() {
        </header>*/}
 
       <Routes>
-       <Route path="/" element={<SuppRecInputPage/>}/>
-       <Route path="/transport_table_page" element={<TransportTableInputPage rowList={[]} columnList={[]}/>}/>
-       {/*Slot na routa pośredniego <Route path="" element={}/>*/ }
+       <Route path="/" element={<SuppRecInputPage supId = {sup} recId= {rec}/>}/>
+       <Route path="/transport_table_page" element={<TransportTableInputPage rowListId={sup} columnListId={rec}/>}/>
+       {/*Slot na routa pośredniego <Route path="" element={}/> TransportTableInputPage - speedrun no loose coupling*/ }
        {/*<Route path="" element={}/>*/}
        <Route path="*" element={<div> No such endpoint </div>} />
       </Routes>

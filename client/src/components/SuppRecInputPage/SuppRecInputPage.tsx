@@ -7,6 +7,8 @@ import {useNavigate} from "react-router-dom";
 
 
 interface Props{
+    supId: string,
+    recId: string
 
 }
 
@@ -22,8 +24,8 @@ export const SuppRecInputPage: FunctionComponent<Props> = (props: Props)=>{
     return(
     <div className={localCSS["input-list-page"]}>
         <div className={localCSS["input-list-box"]}>
-            <InputList argumentList={["Nazwa", "Podaż", "Cena"]} title="Dostawcy" listId="Suppliers"/>
-            <InputList argumentList={["Nazwa", "Popyt", "Cena"]} title="Odbiorcy" listId="Recipients"/>
+            <InputList argumentList={["Nazwa", "Podaż", "Cena"]} title="Dostawcy" listId={props.supId}/>
+            <InputList argumentList={["Nazwa", "Popyt", "Cena"]} title="Odbiorcy" listId={props.recId}/>
         </div>
         <div className={localCSS["button-next-box"]}>
             <button className={localCSS["button-next"]} onClick={(e)=>{

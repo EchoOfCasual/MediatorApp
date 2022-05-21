@@ -4,6 +4,9 @@ import localCSS from "./inputList.module.css";
 import {InputListEntry} from "./InputListEntry/InputListEntry"
 import { addEntryInList, addList, selectInputList } from './inputListSlice';
 
+
+//LEGIT ONE
+
 interface Props{
     argumentList: string[],
     title: string,
