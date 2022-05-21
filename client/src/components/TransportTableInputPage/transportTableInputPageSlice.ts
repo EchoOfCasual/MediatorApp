@@ -2,38 +2,31 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState} from '../../app/store';
 
 export interface transportTableState{
-    transportTable: number[][]
+    profit: number,
+    optimalSellPathsTable: number[][]
 }
 
 const initialState: transportTableState = {
-    transportTable: []
+    profit: 0,
+    optimalSellPathsTable: []
 }
 
-interface setSpecificValueInterface{
-    supplierIndex: number,
-    recipientIndex: number,
-    value: number
-}
 
 
 export const transportTableInputPageSlice = createSlice({
     name: "transportTable",
     initialState,
     reducers: {
-        purgeTable: (state) =>{
+        purgeOutputTable: (state) =>{
 
-            state.transportTable = [];
+            state = initialState;
         },
 
-        setTable: (state, action: PayloadAction<number[][]>)=>{
+        setOutputTable: (state, action: PayloadAction<transportTableState>)=>{
 
-            state.transportTable = action.payload;
+            state.optimalSellPathsTable = action.payload.optimalSellPathsTable;
+            state.profit = action.payload.profit;
         },
-
-        setSpecificValue: (state, action: PayloadAction<setSpecificValueInterface>)=>{
-            state.transportTable[action.payload.recipientIndex][action.payload.supplierIndex] = action.payload.value;
-        },
-
 
 
     }
@@ -41,8 +34,8 @@ export const transportTableInputPageSlice = createSlice({
 
 })
 
-export const {purgeTable, setTable, setSpecificValue} = transportTableInputPageSlice.actions;
+export const {purgeOutputTable, setOutputTable} = transportTableInputPageSlice.actions;
 
-export const selectTransportTable = (state: RootState) => state.transportTable.transportTable;
+export const selectTransportTable = (state: RootState) => state.transportTable;
 
 export default transportTableInputPageSlice.reducer;

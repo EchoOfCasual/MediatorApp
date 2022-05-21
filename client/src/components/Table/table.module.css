@@ -1,19 +1,16 @@
-.table-input-page-wrapper{
+.table-input-wrapper{
 
 }
 
 
-.tile-in-transport-table{
-    width: 150px;
+.tile-in-table{
+    width: 180px;
     padding: 5px;
     border: 1px solid black;
 
 }
 
-.input-in-tile-in-transport-table{
-    width: 110px;
 
-}
 
 .row-box-in-table{
     display: flex;
@@ -28,16 +25,4 @@
     align-items: center;
 
 
-}
-
-.ok-button-wrapper{
-
-}
-
-.ok-button{
-
-}
-
-.ok-button-error-message{
-    
 }

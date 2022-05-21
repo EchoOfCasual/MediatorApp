@@ -20,6 +20,7 @@ public class AlgorithmController {
         algorithmServie = algorithmServiceArg;
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping
     public ResponseEntity<?> getAlgorithmOutput(@RequestBody AlgorithmInput algorithmInput)
     {

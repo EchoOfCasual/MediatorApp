@@ -36,7 +36,7 @@ export const InputList: FunctionComponent<Props> = (props: Props) =>{
 
             let inputListEntries = listFromRedux.lists[props.listId].map((value: string[], index: number)=>{
                 return(
-                    <InputListEntry argList={value} indexOfEntry={index} listId={props.listId}/>
+                    <InputListEntry key={index} argList={value} indexOfEntry={index} listId={props.listId}/>
                 );
             })
             setEntryList(inputListEntries);

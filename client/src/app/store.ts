@@ -1,12 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import inputListReducer from '../components/InputList/inputListSlice';
 import transportTableReducer from '../components/TransportTableInputPage/transportTableInputPageSlice';
+import inputTableReducer from '../components/InputTable/inputTableSlice';
+
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     inputList: inputListReducer,
+    inputTable: inputTableReducer,
     transportTable: transportTableReducer
   },
 });

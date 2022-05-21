@@ -1,9 +1,13 @@
-import React, {FunctionComponent, useEffect, useState, useRef} from 'react'
+import React, {FunctionComponent, useEffect, useState, useRef, MouseEventHandler} from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import localCSS from "./transportTableInputPage.module.css";
+import {InputTable} from "../InputTable/InputTable";
 import {InputList} from "../InputList/InputList";
 import {selectInputList } from '../InputList/inputListSlice';
 import {useNavigate} from "react-router-dom";
+import algorithm, { algorithmRequestInterface, recipientInterface, supplierInterface } from '../../actions/algorithm';
+import { selectInputTable } from '../InputTable/inputTableSlice';
+import { setOutputTable, transportTableState } from './transportTableInputPageSlice';
 
 
 export interface tableTile{
@@ -30,84 +34,114 @@ interface Props{
 
 export const TransportTableInputPage: FunctionComponent<Props> = (props: Props)=>{
 
+
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
+    const [infoLists, setInfoLists] = useState<string[][]>([[],[]]);
     const listFromRedux = useAppSelector(selectInputList);
-
-    const [userInputTable, setUserInputTable] = useState<string[][]>(Array(listFromRedux.lists[props.rowListId].length).fill(Array(listFromRedux.lists[props.columnListId].length).fill("")));
-    const [tableDisplayed, setTableDisplayed] = useState<any>(<></>); // Dobrze by było znaleźć typ tsx a
+    const tableFromRedux = useAppSelector(selectInputTable);
     
     useEffect(()=>{
         if (listFromRedux.lists.hasOwnProperty(props.columnListId) && listFromRedux.lists.hasOwnProperty(props.rowListId)) 
-        { 
+        {   
+            let columnList = listFromRedux.lists[props.columnListId].map((element: string[])=>{
+                return(element[0] + "(popyt: " + element[1] + "| cena: " + element[2]+")")
+            });
 
-            let rowsDisplayed = [];
+            let rowList = listFromRedux.lists[props.rowListId].map((element: string[])=>{
+                return(element[0] + "(podaż: " + element[1] + "| cena: " + element[2]+")")
+            });
 
-            for(let rowId: number = 0; rowId < listFromRedux.lists[props.rowListId].length+1 ; rowId = rowId +1){
+            setInfoLists([columnList, rowList]);
 
-                let oneRow = [];
-                for(let columnId: number = 0; columnId < listFromRedux.lists[props.columnListId].length+1 ; columnId = columnId +1){
-                    if(columnId===0 && rowId ===0){
-                        oneRow.push(<div className={localCSS["tile-in-transport-table"]}></div>);
-                    }
-                    else if(columnId == 0){
-                        
-                        let temp = listFromRedux.lists[props.rowListId][rowId-1];
-                        console.log(temp);
-                        oneRow.push(<div className={localCSS["tile-in-transport-table"]}>{temp[0] + "(podaż: " + temp[1] + "| cena: " + temp[2]+")"}</div>);
-                    }
-                    else if(rowId == 0){
-                        
-                        let temp = listFromRedux.lists[props.columnListId][columnId-1];
-                        console.log(temp);
-                        oneRow.push(<div className={localCSS["tile-in-transport-table"]}>{temp[0] + "(popyt: " + temp[1] + "| cena: " + temp[2]+")"}</div>);
-                    }
-                    else{
-                        oneRow.push(<div className={localCSS["tile-in-transport-table"]}>
-                            <input 
-                        
-                        onChange={(e)=>{
-                            let newUserInputTable:string[][] = userInputTable.map((value, index)=>{return value.map((value1, index1)=>value1)});
-                            newUserInputTable[rowId-1][columnId-1] = e.target.value;
-                            console.log(e);
-                            console.log(newUserInputTable);
-                            console.log(userInputTable);
-                            console.log(userInputTable==newUserInputTable);
-                            console.log(userInputTable===newUserInputTable);
-                            
-                            setUserInputTable(newUserInputTable);
-
-                        }}
-
-                        value={userInputTable[rowId-1][columnId-1]}
-
-                        placeholder ="Koszty transportu"
-                        className={localCSS["input-in-tile-in-transport-table"]}></input></div>);
-
-                    }
-                
-                }
-
-                rowsDisplayed.push(<div className={localCSS["row-box-in-table"]}>{oneRow}</div>)
-
-            }
-
-            setTableDisplayed(<div className={localCSS["table-box"]}>{rowsDisplayed}</div>);
         }
+            
+    }, [props])
 
+
+    const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) =>{
+        let stringInImproperPlaceFlag: boolean = false;
+        let transportTable: number[][] = tableFromRedux.map((elem, index)=>{
+            
+            return elem.map((elem1, index1)=>{
+
+                let out: number = parseFloat(elem1);
+                if(out === NaN)
+                    stringInImproperPlaceFlag = true;
+
+                return out;
+            });
+        })
+
+        let recipientTable: recipientInterface[] = listFromRedux.lists[props.columnListId].map((elem: string[])=>{
+            let outPrice: number = parseFloat(elem[2]);
+            let outQuantity: number = parseFloat(elem[1]);
+            if(outPrice === NaN || outQuantity === NaN)
+                    stringInImproperPlaceFlag = true;
+
+            return ({"buyPrice": outPrice, "desiredQuantity": outQuantity})
+        });
+
+        let supplierTable: supplierInterface[] = listFromRedux.lists[props.rowListId].map((elem: string[])=>{
+            let outPrice: number = parseFloat(elem[2]);
+            let outQuantity: number = parseFloat(elem[1]);
+            if(outPrice === NaN || outQuantity === NaN)
+                    stringInImproperPlaceFlag = true;
+
+            return ({"sellPrice": outPrice, "availableQuantity":outQuantity})
+        });
+
+        if(stringInImproperPlaceFlag){
+
+            setErrorMessage("Input inproper - letter where only number should be (or input whatsoever) ~ Yoda")
+
+            return;
+        }
+            
+
+        let algInput: algorithmRequestInterface ={
+            recipientTable: [],
+            supplierTable: [],
+            transportaionCostsTable: []
+        };
+
+        algInput.recipientTable = recipientTable;
+        algInput.supplierTable = supplierTable;
+        algInput.transportaionCostsTable = transportTable;
 
         
 
 
-    }, [props])
+
+        algorithm.getAlgorithmOutput(algInput).then((response)=>{
+            let outputTable: number[][] = response.data.optimalSellPathsTable;
+            let outputProfit: number = response.data.profit;
+            let outputData: transportTableState = {
+                optimalSellPathsTable: outputTable,
+                profit: outputProfit
+            }
+
+            dispatch(setOutputTable(outputData));
+            navigate("/results");
+            
 
 
+        }).catch(()=>{
+            console.log("sth unexpected happened")
+
+        })
+    }
 
 
     return(<div className={localCSS["table-input-page-wrapper"]}>
-            {tableDisplayed}
+            <InputTable columnList={infoLists[0]} rowList={infoLists[1]}/>
             <div className={localCSS["ok-button-wrapper"]}>
-                <button className={localCSS["ok-button"]}>OK</button>
+                <button className={localCSS["ok-button"]} onClick={onClickHandler} >OK</button>
+                <div className={localCSS["ok-button-error-message"]}>
+
+                </div>
             </div>
         </div>)
 }

@@ -29,7 +29,7 @@ export const InputListEntry: FunctionComponent<Props> = (props:Props) =>{
                 interchangableClass = localCSS["odd-input-in-input-list-entry"];
             }
     
-            return (<div className={`${localCSS["input-in-input-list-entry"]} ${interchangableClass}` }>
+            return (<div key={index} className={`${localCSS["input-in-input-list-entry"]} ${interchangableClass}` }>
                 {value}
             </div>);
     

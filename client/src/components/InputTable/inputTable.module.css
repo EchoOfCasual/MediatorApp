@@ -1,10 +1,10 @@
-.table-input-page-wrapper{
+.table-input-wrapper{
 
 }
 
 
 .tile-in-transport-table{
-    width: 150px;
+    width: 180px;
     padding: 5px;
     border: 1px solid black;
 
@@ -28,16 +28,4 @@
     align-items: center;
 
 
-}
-
-.ok-button-wrapper{
-
-}
-
-.ok-button{
-
-}
-
-.ok-button-error-message{
-    
 }
