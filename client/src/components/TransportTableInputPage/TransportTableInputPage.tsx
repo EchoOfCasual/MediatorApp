@@ -118,9 +118,15 @@ export const TransportTableInputPage: FunctionComponent<Props> = (props: Props)=
         algorithm.getAlgorithmOutput(algInput).then((response)=>{
             let outputTable: number[][] = response.data.optimalSellPathsTable;
             let outputProfit: number = response.data.profit;
+            let costTable: number[][]= response.data.costsTable;
+            let cost: number = response.data.cost;
+            let income: number = response.data.income;
             let outputData: transportTableState = {
                 optimalSellPathsTable: outputTable,
-                profit: outputProfit
+                profit: outputProfit,
+                profitTable: costTable,
+                cost: cost,
+                income: income
             }
 
             dispatch(setOutputTable(outputData));

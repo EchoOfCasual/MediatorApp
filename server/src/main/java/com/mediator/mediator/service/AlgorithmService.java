@@ -26,7 +26,22 @@ public class AlgorithmService {
         }
         Mediator mediator = new Mediator(profitTable, supply, demand);
         mediator.calculate();
-        AlgorithmOutput algorithmOutput = new AlgorithmOutput(Float.valueOf(mediator.getProfit()), mediator.getDistribution());
+
+        float income = 0;
+        float cost = 0;
+        Integer dist[][] = mediator.getDistribution();
+
+        for(int i = 0; i < supply.length; i++) {
+            for(int j = 0; j < demand.length; j++) {
+                if(dist[i][j] == null)
+                    continue;
+
+                income += dist[i][j] * algorithmInput.getRecipientTable()[j].getBuyPrice();
+                cost += dist[i][j] * algorithmInput.getSupplierTable()[i].getSellPrice() + algorithmInput.getTransportaionCostsTable()[i][j] * dist[i][j];
+            }
+        }
+
+        AlgorithmOutput algorithmOutput = new AlgorithmOutput(Float.valueOf(mediator.getProfit()), mediator.getDistribution(), profitTable, income, cost);
 
         return algorithmOutput;
     }

@@ -3,12 +3,18 @@ import { RootState} from '../../app/store';
 
 export interface transportTableState{
     profit: number,
-    optimalSellPathsTable: number[][]
+    optimalSellPathsTable: number[][],
+    profitTable: number[][],
+    cost: number,
+    income: number
 }
 
 const initialState: transportTableState = {
     profit: 0,
-    optimalSellPathsTable: []
+    optimalSellPathsTable: [],
+    profitTable: [],
+    cost: 0,
+    income: 0
 }
 
 
@@ -26,6 +32,9 @@ export const transportTableInputPageSlice = createSlice({
 
             state.optimalSellPathsTable = action.payload.optimalSellPathsTable;
             state.profit = action.payload.profit;
+            state.profitTable = action.payload.profitTable;
+            state.cost = action.payload.cost;
+            state.income = action.payload.income;
         },
 
 
