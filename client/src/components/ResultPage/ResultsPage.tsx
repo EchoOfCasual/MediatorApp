@@ -98,7 +98,7 @@ export const ResultsPage: FunctionComponent<Props> = (props: Props)=>{
     console.log(dataForTable[0]);
 
     return(<div className={localCSS["table-output-wrapper"]}>
-                <h4 className={localCSS["table-header"]}>Tabela przychodu</h4>
+                <h4 className={localCSS["table-header"]}>Tabela zysku</h4>
                 <Table stringsForTable={dataForTable[1]}/> 
                 <h4 className={localCSS["table-header"]}>Zoptymalizowana tabela</h4>
                 <Table stringsForTable={dataForTable[0]}/> 
