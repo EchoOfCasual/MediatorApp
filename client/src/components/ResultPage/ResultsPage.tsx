@@ -27,10 +27,22 @@ export const ResultsPage: FunctionComponent<Props> = (props: Props)=>{
 
     useEffect(()=>{
 
+
         if(outputTableFromRedux.length <= 0)
             return;
         if(outputTableFromRedux[0].length <= 0)
             return;
+
+        let entireSupply: number=0;
+        let entireDemand: number=0;
+
+        listFromRedux.lists[props.columnListId].map((element:string) => {
+            entireSupply += parseFloat(element[1]);
+        });
+
+        listFromRedux.lists[props.rowListId].map((element:string) => {
+            entireDemand += parseFloat(element[1]);
+        });
 
         let rowsDisplayedProfit: string[][] = [];
         let rowsDisplayed: string[][] = [];
@@ -56,8 +68,8 @@ export const ResultsPage: FunctionComponent<Props> = (props: Props)=>{
                     oneRowProfit.push(temp[0] + "(podaż: " + temp[1] + "| cena: " + temp[2]+")");
                 }
                 else if(columnId == 0){
-                    oneRow.push("Dostawca Fikcyjny");
-                    oneRowProfit.push("Dostawca Fikcyjny");
+                    oneRow.push("Dostawca Fikcyjny(podaż:" + entireSupply + ")");
+                    oneRowProfit.push("Dostawca Fikcyjny(podaż:" + entireSupply + ")");
                     
                 }
                 else if(rowId == 0 && columnId <= listFromRedux.lists[props.columnListId].length ){
@@ -69,8 +81,8 @@ export const ResultsPage: FunctionComponent<Props> = (props: Props)=>{
                     oneRowProfit.push(temp[0] + "(popyt: " + temp[1] + "| cena: " + temp[2]+")");
                 }
                 else if(rowId == 0){
-                    oneRow.push("Odbiorca Fikcyjny");
-                    oneRowProfit.push("Odbiorca Fikcyjny");
+                    oneRow.push("Odbiorca Fikcyjny(popyt:" + entireDemand + ")");
+                    oneRowProfit.push("Odbiorca Fikcyjny(popyt:" + entireDemand + ")");
 
                 }
                 else{
