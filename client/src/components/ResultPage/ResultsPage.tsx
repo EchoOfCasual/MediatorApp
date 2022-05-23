@@ -20,7 +20,7 @@ export const ResultsPage: FunctionComponent<Props> = (props: Props)=>{
 
     const dispatch = useAppDispatch();
 
-    const [dataForTable, setDataForTable] = useState<any>({});
+    const [dataForTable, setDataForTable] = useState<string[][][]>([[],[]]);
     const listFromRedux = useAppSelector(selectInputList);
     const outputObjectFromRedux = useAppSelector(selectTransportTable);
     const outputTableFromRedux = outputObjectFromRedux.optimalSellPathsTable ;
@@ -90,16 +90,18 @@ export const ResultsPage: FunctionComponent<Props> = (props: Props)=>{
 
         }
 
-    setDataForTable({rowsDisplayed: rowsDisplayed, rowsDisplayedProfit: rowsDisplayedProfit});
+    setDataForTable([rowsDisplayed, rowsDisplayedProfit]);
     },[])
 
     console.log("Tabele");
-    console.log(dataForTable["rowsDisplayedProfit"]);
-    console.log(dataForTable["rowsDisplayed"]);
+    console.log(dataForTable[1]);
+    console.log(dataForTable[0]);
 
     return(<div className={localCSS["table-output-wrapper"]}>
-                <Table stringsForTable={dataForTable["rowsDisplayedProfit"]}/> 
-                <Table stringsForTable={dataForTable["rowsDisplayed"]}/> 
+                <h4 className={localCSS["table-header"]}>Tabela przychodu</h4>
+                <Table stringsForTable={dataForTable[1]}/> 
+                <h4 className={localCSS["table-header"]}>Zoptymalizowana tabela</h4>
+                <Table stringsForTable={dataForTable[0]}/> 
                 <div className={localCSS["addtional-info-wrapper"]}>
                     <div className={localCSS["profit-info"]}>
                         Zysk: {outputObjectFromRedux.profit}
